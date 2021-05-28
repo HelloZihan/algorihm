@@ -12,7 +12,7 @@ public class FindMedianSortedArrays {
     /**
      * 解法1：合并俩数组
      * 解法2：在该数组上优化，其实并不用合并俩数组，只需要指针找到中间的位置即可
-     *
+     * https://www.cxyxiaowu.com/2869.html
      * 该俩种方法都需要遍历全部，复杂度为O(m+n)，无法达到O(log(m+n))
      * @param nums1
      * @param nums2
