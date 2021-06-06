@@ -18,6 +18,9 @@ public class SearchTreeConvertList {
         }
     }
 
+    /**
+     * head为头结点，pre一直跟着树走，最终pre到达尾部节点，再将head与pre连起来
+     */
     private TreeNode head, pre;
     public TreeNode convert(TreeNode pRootOfTree) {
         if (pRootOfTree == null) {
