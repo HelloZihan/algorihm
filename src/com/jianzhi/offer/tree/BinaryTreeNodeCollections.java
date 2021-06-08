@@ -5,6 +5,8 @@ import java.util.Stack;
 
 /**
  * 二叉树的简单算法汇总
+ * 颜色标记法(注意访问的顺序)
+ * https://www.chaochaogege.com/2019/09/17/19/
  * @author zhaojun
  */
 public class BinaryTreeNodeCollections {
