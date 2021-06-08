@@ -38,5 +38,4 @@ public class GetNext {
         //这里是中序遍历最后一个节点
        return null;
     }
-
 }
