@@ -19,7 +19,6 @@ public class PrintTree {
             data = x;
         }
     }
-
     public ArrayList<ArrayList<Integer>> print(TreeNode pRoot) {
         if (pRoot == null) {
             return null;
