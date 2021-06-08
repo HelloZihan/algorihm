@@ -27,7 +27,6 @@ public class MirrorTree {
             data = x;
         }
     }
-
     public TreeNode mirror (TreeNode pRoot) {
         if(pRoot == null) {
             return null;
