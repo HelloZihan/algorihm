@@ -14,7 +14,7 @@ package com.leetcode.hot100;
  */
 public class MergeTrees {
 
-    public class TreeNode {
+    private class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
