@@ -23,4 +23,14 @@ public class Add {
         } while (ans != 0);
         return result;
     }
+    
+    //递归
+    public int add1(int a, int b) {
+        if (b == 0) {
+            return a;
+        }
+        
+        // 转换成非进位和 + 进位
+        return add1(a ^ b, (a & b) << 1);
+    }
 }
