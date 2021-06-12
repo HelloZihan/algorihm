@@ -49,6 +49,7 @@ public class EntryNodeOfLoop {
         if (pHead == null) {
             return null;
         }
+        //slow fast和重置后的fast起点均为phead
         ListNode slow = pHead;
         ListNode fast = pHead;
         while (fast != null && fast.next != null && fast.next.next != null) {
