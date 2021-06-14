@@ -15,7 +15,7 @@ package com.leetcode.hot100;
  *
  * @author zhaojun
  */
-public class MaxProfit {
+public class MaxProfit1 {
     public int maxProfit(int[] prices) {
         int result = 0;
         int min = prices[0];
