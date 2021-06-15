@@ -25,55 +25,54 @@ package com.leetcode.hot100;
  * @author zhaojun
  */
 public class CanPartition {
-    public int findTargetSumWays(int[] nums, int target) {
+
+    /**
+     * 转化成0/1背包恰好装满的问题
+     * @param nums
+     * @return
+     */
+    public boolean canPartition(int[] nums) {
         int sum=0;
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
         }
-        if ((sum + target) < 0 || ((sum + target) &1) == 1) {
-            return 0;
+        if ((sum&1) == 1) {
+            return false;
         }
-        //这是目标和
-        target = (sum + target)/2;
-        int[][] dp = new int[nums.length+1][target+1];
-        dp[0][0] = 1;
+        sum = sum/2;
+        boolean[][] dp = new boolean[nums.length+1][sum+1];
+        dp[0][0] = true;
         for (int i = 1; i < nums.length+1; i++) {
-            for (int j = 0; j < target+1; j++) {
+            for (int j = 1; j < sum+1; j++) {
                 if (nums[i-1] > j) {
-                    //二维数组时，每个格子都要计算，不能省略
                     dp[i][j] = dp[i-1][j];
                 } else {
-                    //取的话有这么多写法，不取的话有这么多写法。一共有相加的种数
-                    dp[i][j] = dp[i-1][j-nums[i-1]] + dp[i-1][j];
+                    dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i-1]];
                 }
             }
         }
-        return dp[nums.length][target];
+        return dp[nums.length][sum];
     }
-    /**
-     * 优化成一维
-     * @param nums
-     * @param target
-     * @return
-     */
-    public int findTargetSumWays1(int[] nums, int target) {
+
+    public boolean canPartition1(int[] nums) {
         int sum=0;
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
         }
-        if ((sum + target) < 0 || ((sum + target) &1) == 1) {
-            return 0;
+        if ((sum&1) == 1) {
+            return false;
         }
-        //这是目标和
-        target = (sum + target)/2;
-        int[] dp = new int[target+1];
-        dp[0] = 1;
+        sum = sum/2;
+        boolean[] dp = new boolean[sum+1];
+        dp[0] = true;
         for (int i = 1; i < nums.length+1; i++) {
-            for (int j = target; j >= nums[i-1]; j--) {
-                //取的话有这么多写法，不取的话有这么多写法。一共有相加的种数
-                dp[j] = dp[j-nums[i-1]] + dp[j];
+            for (int j = sum; j >= nums[i-1]; j--) {
+                //https://blog.csdn.net/nicolelili1/article/details/89062044 为什么要或上dp[j]，看完这个就理解了，因为dp[j]是i的上一次循环算出来的值存在这里
+                //dp[j-nums[i]] || dp[j]中，dp[j-nums[i]]代表选该物品，dp[j]代表不选该物品
+                dp[j] = dp[j-nums[i-1]] || dp[j];
             }
         }
-        return dp[target];
+        return dp[sum];
     }
+
 }
