@@ -52,8 +52,43 @@ public class MaxProfit4 {
             for (int j = 1; j <= k; ++j) {
                 buy[i][j] = Math.max(buy[i - 1][j], sell[i - 1][j] - prices[i]);
                 sell[i][j] = Math.max(sell[i - 1][j], buy[i - 1][j - 1] + prices[i]);
+                //dp[i][j][0] = Math.max(dp[i - 1][j][0], dp[i - 1][j][1] + prices[i]);
+                //dp[i][j][1] = Math.max(dp[i - 1][j][1], dp[i - 1][j - 1][0] - prices[i]);
             }
         }
         return Arrays.stream(sell[n - 1]).max().getAsInt();
+    }
+
+    /**
+     * 通用方法比较好理解：
+     * https://leetcode-cn.com/circle/article/qiAgHn/
+     *
+     * @param k
+     * @param prices
+     * @return
+     */
+    public int maxProfit1(int k, int[] prices) {
+        if (prices == null || prices.length == 0) {
+            return 0;
+        }
+        int length = prices.length;
+        if (k >= length / 2) {
+            k = length / 2;
+        }
+        int[][][] dp = new int[length][k + 1][2];
+        for (int i = 1; i <= k; i++) {
+            dp[0][i][0] = 0;
+            dp[0][i][1] = -prices[0];
+        }
+        for (int i = 1; i < length; i++) {
+            for (int j = 1; j <= k; j++) {
+                //第三维始终代表是否持有股票，0代表不持有，1代表持有
+                //注意到允许的最大交易次数是不变的，因为每次交易包含两次成对的操作，买入和卖出。只有买入操作会改变允许的最大交易次数。
+                dp[i][j][0] = Math.max(dp[i - 1][j][0], dp[i - 1][j][1] + prices[i]);
+                //买入时消耗了交易次数，故上面卖出时不再消耗
+                dp[i][j][1] = Math.max(dp[i - 1][j][1], dp[i - 1][j - 1][0] - prices[i]);
+            }
+        }
+        return dp[length - 1][k][0];
     }
 }
