@@ -1,5 +1,7 @@
 package com.leetcode.hot100;
 
+import java.util.Arrays;
+
 /**
  * 123. 买卖股票的最佳时机 III
  *
@@ -16,40 +18,39 @@ package com.leetcode.hot100;
 public class MaxProfit3 {
 
     /**
-     * 一天结束时，可能有持股、可能未持股、可能卖出过1次、可能卖出过2次、也可能未卖出过
-     * 所以定义状态转移数组dp[天数][当前是否持股][卖出的次数]
-     * https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/solution/tong-su-yi-dong-de-dong-tai-gui-hua-jie-fa-by-marc/
+     * 根据MaxProfit4中可以完成k笔交易来实现
      *
-     *  @param prices
+     * 我们用buy[i][j]表示对于数组prices[0..i]中的价格而言，进行恰好j笔交易，并且当前手上持有一支股票，这种情况下的最大利润；
+     * 用sell[i][j]表示恰好进行j笔交易，并且当前手上不持有股票，这种情况下的最大利润。
+     *
+     * @param prices
      * @return
      */
     public int maxProfit(int[] prices) {
-        if (prices == null || prices.length <= 1) {
+        if (prices.length == 0) {
             return 0;
         }
-        int[][][] dp = new int[prices.length][2][3];
-        //因为最小值再减去1就是最大值Integer.MIN_VALUE-1=Integer.MAX_VALUE
-        int MIN_VALUE = Integer.MIN_VALUE / 2;
-        //初始化
-        //第一天休息
-        dp[0][0][0] = 0;
-        //不可能
-        dp[0][0][1] = dp[0][1][1] = MIN_VALUE;
-        //不可能
-        dp[0][0][2] = dp[0][1][2] = MIN_VALUE;
-        //买股票
-        dp[0][1][0] = -prices[0];
-        for (int i = 1; i < prices.length; i++) {
-            //dp[天数][当前是否持股][卖出的次数]
-            dp[i][0][0] = 0;
-            dp[i][0][1] = Math.max(dp[i - 1][1][0] + prices[i], dp[i - 1][0][1]);
-            dp[i][0][2] = Math.max(dp[i - 1][1][1] + prices[i], dp[i - 1][0][2]);
-            dp[i][1][0] = Math.max(dp[i - 1][0][0] - prices[i], dp[i - 1][1][0]);
-            dp[i][1][1] = Math.max(dp[i - 1][0][1] - prices[i], dp[i - 1][1][1]);
-            //1代表持股，2又代表卖出了两次。题干中最多只能卖出两次，故不存在。
-            dp[i][1][2] = MIN_VALUE;
+        int n = prices.length;
+        //第一天买，第二天才能卖。如果第二天卖了再买，跟操作一样的利润
+        int[][] buy = new int[n][3];
+        int[][] sell = new int[n][3];
+        buy[0][0] = -prices[0];
+        sell[0][0] = 0;
+        for (int i = 1; i <= 2; ++i) {
+            //边界不合法值
+            buy[0][i] = Integer.MIN_VALUE / 2;
+            sell[0][i] = Integer.MIN_VALUE / 2;
         }
-        return Math.max(0, Math.max(dp[prices.length - 1][0][1], dp[prices.length - 1][0][2]));
+        for (int i = 1; i < n; ++i) {
+            buy[i][0] = Math.max(buy[i - 1][0], sell[i - 1][0] - prices[i]);
+            //循环条件一直到k，第k笔交易
+            for (int j = 1; j <= 2; ++j) {
+                //买了则代表进行了第k笔交易，而不是卖完才算交易
+                buy[i][j] = Math.max(buy[i - 1][j], sell[i - 1][j] - prices[i]);
+                sell[i][j] = Math.max(sell[i - 1][j], buy[i - 1][j - 1] + prices[i]);
+            }
+        }
+        return Arrays.stream(sell[n - 1]).max().getAsInt();
     }
 
     /**
@@ -83,5 +84,4 @@ public class MaxProfit3 {
         }
         return sell2;
     }
-
 }
