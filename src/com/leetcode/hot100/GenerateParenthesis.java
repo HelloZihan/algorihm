@@ -43,6 +43,7 @@ public class GenerateParenthesis {
             result.add(stringBuilder.toString());
             return;
         }
+        //[((())), (())))()), (()))()))(), ()()))())(()), ()())())(()))()]
         if (left == right) {
             dfs1(left+1, right, n, stringBuilder.append("("));
             stringBuilder.delete(left+right, left+right+1);
@@ -59,6 +60,35 @@ public class GenerateParenthesis {
                 dfs1(left, right+1, n, stringBuilder.append(")"));
                 stringBuilder.delete(left+right, left+right+1);
             }
+        }
+    }
+
+    /**
+     * 回溯2
+     * @param n
+     * @return
+     */
+    public List<String> generateParenthesis1(int n) {
+        List<String> ans = new ArrayList<String>();
+        backtrack(ans, new StringBuilder(), 0, 0, n);
+        return ans;
+    }
+
+    public void backtrack(List<String> ans, StringBuilder cur, int open, int close, int max) {
+        if (cur.length() == max * 2) {
+            ans.add(cur.toString());
+            return;
+        }
+        //类似于前序遍历，一直增加(，一路到最后
+        if (open < max) {
+            cur.append('(');
+            backtrack(ans, cur, open + 1, close, max);
+            cur.deleteCharAt(cur.length() - 1);
+        }
+        if (close < open) {
+            cur.append(')');
+            backtrack(ans, cur, open, close + 1, max);
+            cur.deleteCharAt(cur.length() - 1);
         }
     }
 
