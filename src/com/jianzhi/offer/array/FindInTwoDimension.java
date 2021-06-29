@@ -1,7 +1,7 @@
 package com.jianzhi.offer.array;
 
-/**
- * 一个整型数组里除了两个数字只出现一次，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字。
+/** todo 需要修改
+ * 一个整型数组里除了两个数字只出现一次，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字。 
  * @author zhaojun
  */
 public class FindInTwoDimension {
