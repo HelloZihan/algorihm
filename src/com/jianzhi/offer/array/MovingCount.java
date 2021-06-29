@@ -46,6 +46,4 @@ public class MovingCount {
         }
         return result;
     }
-
-
 }
