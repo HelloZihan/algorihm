@@ -21,8 +21,44 @@ public class HasPath {
      * @param word string字符串
      * @return bool布尔型
      */
+    private boolean  result = false;
     public boolean hasPath (char[][] matrix, String word) {
-        // write code here todo
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return false;
+        }
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] == word.charAt(0)) {
+                    boolean[][] flag = new boolean[matrix.length][matrix[0].length];
+                    if (dfs(matrix, i, j, word, 0, flag)) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
+    }
+
+    private boolean dfs(char[][] matrix, int i, int j, String word, int index, boolean[][] flag) {
+        if (i < 0 || j<0 || i>= matrix.length || j >= matrix[0].length || flag[i][j]) {
+            return false;
+        }
+        if (index >= word.length() || matrix[i][j] != word.charAt(index)) {
+            return false;
+        }
+        if (index == word.length() -1) {
+            result = true;
+            return true;
+        }
+        if (result) {
+            return true;
+        }
+        flag[i][j] = true;
+        dfs(matrix, i+1, j, word, index+1, flag);
+        dfs(matrix, i-1, j, word, index+1, flag);
+        dfs(matrix, i, j+1, word, index+1, flag);
+        dfs(matrix, i, j-1, word, index+1, flag);
+        flag[i][j] = false;
+        return result;
     }
 }
