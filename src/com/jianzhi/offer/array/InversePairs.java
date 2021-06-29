@@ -25,5 +25,4 @@ package com.jianzhi.offer.array;
  * @author zhaojun
  */
 public class InversePairs {
-
 }
