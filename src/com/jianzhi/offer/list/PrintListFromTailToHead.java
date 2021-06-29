@@ -34,7 +34,6 @@ public class PrintListFromTailToHead {
         }
         return list;
     }
-
     /**
      * 反转链表
      * @param listNode
