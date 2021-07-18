@@ -1,6 +1,7 @@
 package com.leetcode.hot100;
 
 
+import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -91,6 +92,29 @@ public class MaxSlidingWindow {
             ans[i - k + 1] = nums[deque.peekFirst()];
         }
         return ans;
+    }
+
+    public int[] maxSlidingWindow3(int[] nums, int k) {
+        Deque<Integer> deque = new ArrayDeque<Integer>();
+        for(int i=0; i<k; i++) {
+            while(!deque.isEmpty() && nums[i] > nums[deque.peek()]) {
+                deque.pop();
+            }
+            deque.push(i);
+        }
+        int[] result = new int[nums.length - k+1];
+        result[0] = nums[deque.peekLast()];
+        for(int i=k; i<nums.length; i++) {
+            while (!deque.isEmpty() && nums[i] >= nums[deque.peek()]) {
+                deque.pop();
+            }
+            deque.push(i);
+            while(deque.peekLast() <= i-k) {
+                deque.pollLast();
+            }
+            result[i - k + 1] = nums[deque.peekLast()];
+        }
+        return result;
     }
 
     public static void main(String[] args) {
