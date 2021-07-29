@@ -15,3 +15,9 @@ sortList
 LRUCache
 lowestCommonAncestor
 maxSlidingWindow
+numSquares
+findDuplicate
+二叉树的序列化与反序列化(serialize)
+removeInvalidParentheses
+maxProfit
+rob
