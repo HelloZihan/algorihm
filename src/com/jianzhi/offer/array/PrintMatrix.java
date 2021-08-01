@@ -1,6 +1,7 @@
 package com.jianzhi.offer.array;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 剑指 Offer 29. 顺时针打印矩阵
@@ -35,5 +36,49 @@ public class PrintMatrix {
             if(++l > r) break;
         }
         return res;
+    }
+
+    /**
+     * 螺旋矩阵
+     *
+     * 给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
+     * https://leetcode-cn.com/problems/spiral-matrix/
+     *
+     * @param matrix
+     * @return
+     */
+    public List<Integer> spiralOrder1(int[][] matrix) {
+        List<Integer> result = new ArrayList<>();
+        int left = 0;
+        int right = matrix[0].length-1;
+        int top=0;
+        int bottom = matrix.length-1 ;
+        while(true) {
+            for(int i=left; i<=right; i++) {
+                result.add(matrix[top][i]);
+            }
+            if(++top > bottom) {
+                break;
+            }
+            for(int i=top; i<=bottom; i++) {
+                result.add(matrix[i][right]);
+            }
+            if(--right<left) {
+                break;
+            }
+            for(int i=right; i>=left; i--) {
+                result.add(matrix[bottom][i]);
+            }
+            if(--bottom<top) {
+                break;
+            }
+            for(int i=bottom; i>=top; i--) {
+                result.add(matrix[i][left]);
+            }
+            if(++left>right) {
+                break;
+            }
+        }
+        return result;
     }
 }
