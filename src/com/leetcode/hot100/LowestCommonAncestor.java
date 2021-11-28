@@ -33,6 +33,7 @@ public class LowestCommonAncestor {
     }
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null || root == p || root == q) {
+            //如果找到了一个节点，该节点下的子树则不用再找了
             return root;
         }
         TreeNode left = lowestCommonAncestor(root.left, p, q);
