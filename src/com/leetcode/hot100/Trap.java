@@ -184,4 +184,23 @@ public class Trap {
         }
         return sum;
     }
+
+
+    public long maxWater (int[] arr) {
+        int left=0, right=arr.length-1;
+        int leftMax=0, rightMax=0;
+        long result=0;
+        while(left < right) {
+            leftMax = Math.max(leftMax, arr[left]);
+            rightMax = Math.max(rightMax, arr[right]);
+            if(leftMax > rightMax) {
+                result += rightMax - arr[right];
+                right--;
+            } else {
+                result += leftMax - arr[left];
+                left++;
+            }
+        }
+        return result;
+    }
 }
