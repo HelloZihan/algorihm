@@ -13,14 +13,14 @@ import java.util.Set;
  */
 public class Permutation {
 
-    private ArrayList<String> result = new ArrayList<String>();
+    private ArrayList<String> result = new ArrayList<>();
     public ArrayList<String> Permutation(String str) {
         char[] chars = str.toCharArray();
-        dfs(chars, 0, new StringBuilder());
+        dfs(chars, 0);
         return result;
     }
 
-    private void dfs(char[] chars, int index, StringBuilder stringBuilder) {
+    private void dfs(char[] chars, int index) {
         if(index == chars.length-1) {
             result.add(new String(chars));
             return;
@@ -33,7 +33,7 @@ public class Permutation {
             }
             set.add(chars[i]);
             swap(chars, i, index);
-            dfs(chars, index+1, stringBuilder);
+            dfs(chars, index+1);
             swap(chars, i, index);
         }
     }
