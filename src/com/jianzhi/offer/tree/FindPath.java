@@ -39,7 +39,6 @@ public class FindPath {
         path.add(root.data);
         if (root.data == target && root.left == null && root.right == null) {
             res.add(new ArrayList<>(path));
-            return;
         }
         if (root.left != null) {
             solve(root.left, target - root.data);
