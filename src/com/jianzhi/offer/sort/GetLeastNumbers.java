@@ -88,5 +88,44 @@ public class GetLeastNumbers {
         quickSort(a, 0, a.length-1);
         System.out.println(Arrays.toString(a));
     }
+    
+    
+    //快排注意点
+    public void quickSort(int[] sort, int left, int right) {
+        //1、判断返回值，带等号
+        if (right<= left) {
+            return;
+        }
+        int i=left;
+        int j = right;
+        int base = sort[i];
+        //2、其余均为小于号。大于所有值跟base进行判断，大于移动到右边，小于移动到左边。
+        while (i < j) {
+            while (i < j && sort[j] > base) {
+                j--;
+            }
+            if (i<j) {
+                sort[i] = sort[j];
+                i++;
+            }
+            while (i<j && sort[i]<base) {
+                i++;
+            }
+            if (i<j) {
+                sort[j] = sort[i];
+                j--;
+            }
+        }
+        sort[i] = base;
+        //注意i-1和i+1,否则遇到相等值时可能会死循环例如{4,4}
+        quickSort(sort, left, i-1);
+        quickSort(sort, i+1, right);
+    }
+
+    public static void main(String[] args) {
+        int[] sort = {4,4,5,3,0,0,0,6,8,1};
+        new TTTest().quickSort(sort, 0 , sort.length-1);
+        System.out.println(Arrays.toString(sort));
+    }
 
 }
